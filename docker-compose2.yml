@@ -14,7 +14,7 @@ services:
         done; (exit $$s)"
     restart: unless-stopped
     volumes:
-      - rum:/app/uploads
+      - xmd_rum:/app/uploads
     environment:
       - PORT=3000
       - ROOT_URL=http://${DOMAIN}:3000
