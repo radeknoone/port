@@ -3,9 +3,30 @@ services:
     mongo:
         container_name: ${NAME}-mongo
         volumes:
-            - ${VOLNAME}:/data/db
-            - ${VOLNAME}:/data/dump
+            - ${NAME}:/data/db
+            - ${NAME}:/data/dump
         networks:
-            - ${NETNAME}
+            - ${NAME}
         image: 'mongo:3.6'
         command: 'mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1'
+        restart: always
+    rocketchat:
+        container_name: ${NAME}-rocketchat
+        ports:
+            - '3000:3000'
+        volumes:
+            - '${NAME}/uploads:/app/uploads'
+        environment:
+            - 'MONGO_OPLOG_URL=mongodb://${name}-mongo:27017/local'
+            - 'MONGO_URL=mongodb://${name}-mongo:27017/rocketchat'
+            - 'ROOT_URL=https://container1.hlubina.com'
+        links:
+            - 'mongo'
+        expose:
+            - '3000'
+        image: 'rocketchat/rocket.chat:latest'
+        depends_on:
+            - mongo
+        restart: always
+        networks:
+            - ${NAME}
