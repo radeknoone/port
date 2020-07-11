@@ -62,4 +62,4 @@ services:
     networks:
       - ${MYNAME}
 networks:
-  customer
+  customer:
