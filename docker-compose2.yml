@@ -35,8 +35,8 @@ services:
     image: mongo:4.0
     restart: unless-stopped
     volumes:
-     - /data/db
-     - /dump
+     - xmd_rum:/data/db
+     - xmd_rum:/dump
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     labels:
       - "traefik.enable=false"
