@@ -69,7 +69,5 @@ services:
       - mongo
     networks:
       - ${MYNAME}
-network:
-  ${MYNAME}:
 networks:
   ${MYNAME}:
