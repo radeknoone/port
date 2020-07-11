@@ -58,3 +58,5 @@ services:
         done; (exit $$s)"
     depends_on:
       - mongo
+volumes:
+  rum:
