@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
     volumes:
      - ${NAME}:/data/db
-     - ${NAME}/dump:/dump
+     - ${NAME}:/dump
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     labels:
       - "traefik.enable=false"
