@@ -70,4 +70,4 @@ services:
     networks:
      - ${MYNAME} 
 networks:
- - ${MYNAME}
+  ${MYNAME}:
