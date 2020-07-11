@@ -27,6 +27,8 @@ services:
       - mongo
     ports:
       - 3000:3000
+    networks:
+      - ${MYNAME} 
     labels:
       - "traefik.backend=rocketchat"
       - "traefik.frontend.rule=Host: ${DOMAIN}"
@@ -40,6 +42,9 @@ services:
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     labels:
       - "traefik.enable=false"
+    networks:
+     - ${MYNAME} 
+
 
   # this container's job is just run the command to initialize the replica set.
   # it will run the command and remove himself (it will not stay running)
@@ -62,3 +67,6 @@ services:
         done; (exit $$s)"
     depends_on:
       - mongo
+    networks:
+     - ${MYNAME} 
+
