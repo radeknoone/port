@@ -14,7 +14,7 @@ services:
         done; (exit $$s)"
     restart: unless-stopped
     volumes:
-      - /opt/new/app/uploads:/app/uploads
+      - /opt/new/${NAME}app/uploads:/app/uploads
     environment:
       - PORT=3000
       - ROOT_URL=http://${DOMAIN}:3000
@@ -35,28 +35,28 @@ services:
     image: mongo:4.0
     restart: unless-stopped
     volumes:
-     - /opt/new/data/db:/data/db
-     - /opt/new/dump:/dump
+     - /opt/new/${NAME}data/db:/data/db
+     - /opt/new/${NAME}data/configdb:/data/configdb
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     labels:
       - "traefik.enable=false"
 
   # this container's job is just run the command to initialize the replica set.
   # it will run the command and remove himself (it will not stay running)
-#  mongo-init-replica:
-#    image: mongo:4.0
-#    command: >
-#      bash -c
-#        "for i in `seq 1 30`; do
- #         mongo mongo/rocketchat --eval \"
-  #          rs.initiate({
- #             _id: 'rs0',
- #             members: [ { _id: 0, host: 'localhost:27017' } ]})\" &&
- #         s=$$? && break || s=$$?;
- #         echo \"Tried $$i times. Waiting 5 secs...\";
-#          sleep 5;
- #       done; (exit $$s)"
-#    depends_on:
-#      - mongo
+  mongo-init-replica:
+    image: mongo:4.0
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo
 volumes:
   data-volume:
