@@ -14,7 +14,7 @@ services:
         done; (exit $$s)"
     restart: unless-stopped
     volumes:
-      - xmd_rum:/app/uploads
+      - xmd_rch_app_uploads:/app/uploads
     environment:
       - PORT=3000
       - ROOT_URL=http://${DOMAIN}:3000
@@ -35,8 +35,8 @@ services:
     image: mongo:4.0
     restart: unless-stopped
     volumes:
-     - xmd_rum:/data/db
-     - xmd_rum:/dump
+     - xmd_mon_data_db:/data/db
+     - xmd_mod_data_dump:/dump
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
     labels:
       - "traefik.enable=false"
@@ -59,4 +59,6 @@ services:
     depends_on:
       - mongo
 volumes:
-  rum:
+  rch_app_uploads:
+  mon_data_db:
+  mon_data_dump:
