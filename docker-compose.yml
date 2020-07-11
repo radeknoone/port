@@ -15,7 +15,7 @@ services:
         ports:
             - '3000:3000'
         volumes:
-            - '${NAME}/uploads:/app/uploads'
+            - '${NAME}:/app/uploads'
         environment:
             - 'MONGO_OPLOG_URL=mongodb://${name}-mongo:27017/local'
             - 'MONGO_URL=mongodb://${name}-mongo:27017/rocketchat'
