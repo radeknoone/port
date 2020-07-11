@@ -1,6 +1,6 @@
 version: '2'
 services:
-    ${NAME}-mongo:
+    mongo:
         container_name: ${NAME}-mongo
         volumes:
             - ${VOLNAME}:/data/db
