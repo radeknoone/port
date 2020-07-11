@@ -1,0 +1,11 @@
+version: '2'
+services:
+    ${NAME}-mongo:
+        container_name: ${NAME}-mongo
+        volumes:
+            - ${VOLNAME}:/data/db
+            - ${VOLNAME}:/data/dump
+        networks:
+            - ${NETNAME}
+        image: 'mongo:3.6'
+        command: 'mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1'
